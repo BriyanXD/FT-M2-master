@@ -1,13 +1,18 @@
 // Crear un array vacío llamado 'toDoItems'
 // Tu codigo acá:
-
+var toDoItems = [];
 
 // En la página 'index.html' hay un elemento span cuyo texto es 'Aplicación creada por:'.
 // Usando querySelector seleccionar dicho span por su id ('createdBy') y luego usando innerHTML
 // agregar tu nombre al final del texto actual. Ej: 'Aplicación creada por Franco'
 // Tu código acá:
 
-
+//defino variable con mi nombre.
+var nombre = 'Nombre Apellido'
+//guardo el elemento HTM cuyo ID sea createdBy
+var spn = document.querySelector('#createdBy')
+//agrego al innerHTML de ese elemento, el actual + mi nombre
+spn.innerHTML = spn.innerHTML + ' ' + nombre
 
 // Crear una clase denominada 'ToDo' cuyo constructor debe recibir un único parámetro del tipo string
 // con el nombre 'description' que será justamente la descripción del ToDo.
@@ -16,18 +21,20 @@
 // 2) 'complete'    : debe setearse en false
 // Ayuda: usar 'this' en el constructor
 
-function ToDo () {
+function ToDo (description) {
   // Tu código acá:
-
+  this.description = description
+  this.complete = false
 }
-
 
 // Agregar un método denominado 'completeToDo' al prototipo de la clase ToDo
 // No requiere ningún argumento
 // Debe setear el atributo 'complete' del ToDo en true
 
 // Tu código acá:
-
+ToDo.prototype.completeToDo = function(){
+  this.complete = true
+}
 
 
 // Agregar dos parámetros a la función 'buildToDo':
@@ -50,6 +57,27 @@ function ToDo () {
 
 function buildToDo(todo, index) {
   // Tu código acá:
+  // Consignas 1 y 2
+  var toDoShell = document.createElement('div');
+  toDoShell.setAttribute('class', 'toDoShell');
+  // Consigna 3
+  var toDoText = document.createElement('span');
+  // Consigna 4
+  toDoText.innerHTML = todo.description;
+  // Consigna 5
+  toDoText.setAttribute('id', index);
+  // Consigna 6
+  if(todo.complete){
+    toDoText.setAttribute('class', 'completeText');
+  }
+  //-----------------------------------------------
+  // Consigna 3 (de COMPLETETODO) 
+  toDoText.addEventListener('click', completeToDo)
+  //-----------------------------------------------
+  // Consigna 7
+  toDoShell.appendChild(toDoText);
+  // Consigna 8
+  return toDoShell
 
 }
 
@@ -60,7 +88,8 @@ function buildToDo(todo, index) {
 
 function buildToDos(toDos) {
   // Tu código acá:
-
+ var arr = toDos.map((t,i)=>buildToDo(t,i));
+ return arr
 }
 
 
@@ -75,6 +104,14 @@ function buildToDos(toDos) {
 
 function displayToDos() {
   // Tu código acá:
+  // Consigna 1
+  var toDoContainer = document.getElementById('toDoContainer');
+  // Consigna 2
+  toDoContainer.innerHTML = '';
+  // Consigna 3
+  var result = buildToDos(toDoItems);
+  // Consigna 4
+  result.map((t)=>toDoContainer.appendChild(t))
 
 }
 
@@ -90,7 +127,17 @@ function displayToDos() {
 
 function addToDo() {
   // Tu código acá:
-
+  // Accedo al valor del input y lo guardo en una variable
+  var value = document.getElementById('toDoInput').value;
+  // Consigna 1
+  var myTodo = new ToDo(value);
+  // Consigna 2
+  toDoItems.push(myTodo);
+  // Consigna 3
+  var inp = document.getElementById('toDoInput');
+  inp.value = '';
+  // Consigna 4
+  displayToDos();
 }
 
 // Agregar un 'Event Listener' para que cada vez que el botón 'AGREGAR' sea clickeado
@@ -99,7 +146,7 @@ function addToDo() {
 //   2) Agregarle un 'click' event listener, pasándole la función 'addToDo' como callback
 
 // Tu código acá:
-
+document.getElementById('addButton').addEventListener('click', addToDo);
 
 // La función completeToDo se va a ejecutar cuando queramos completar un todo
 // [NOTA: Algunas cuestiones a tener en cuenta
@@ -115,9 +162,13 @@ function addToDo() {
 
 function completeToDo(event) {
   // DESCOMENTAR LA SIGUIENTE LINEA
-  // const index = event.target.id;
+   const index = event.target.id;
   // Tu código acá:
-
+  // Consigna 1
+  toDoItems[index].completeToDo();
+  // Consigna 2
+  displayToDos()
+  // consigna 3 hecho en la función 'buildTodo'
 }
 
 // Una vez que llegaste a este punto verificá que todos los tests pasen
@@ -137,8 +188,8 @@ function completeToDo(event) {
 
 
 // Acá debes insertar la llamada a 'displayToDos'
-
-
+// Consigna 5
+displayToDos();
 // ---------------------------- NO CAMBIES NADA DE ACÁ PARA ABAJO ----------------------------- //
 if (typeof module !== 'undefined') {
   module.exports = {

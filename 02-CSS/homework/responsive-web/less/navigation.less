@@ -1,1 +1,30 @@
 // Código de Nav acá
+//el código que está comentado es por que se hace en mixins.
+nav{
+    /*  display: flex;
+     flex-direction: column;
+     align-items: center; */
+     .flex(column);
+     
+     background-color: @nav-bg;
+     border: @nav-border solid 2px;
+     padding-top: 10px;
+ 
+     ul{
+        /*  display: flex;
+         justify-content: space-around; */
+         .flex(@justify: space-around);
+         width: 50%;
+         padding: 10px;
+        /* EN FORMATO MOBILE LE CAMBIO EL WIDTH */
+         @media @phone{
+             width: 90%;
+         }
+     }
+ 
+      a{
+         text-decoration: none;
+         color: @nav-font;
+         font-weight: bold;
+     }
+ }
