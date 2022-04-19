@@ -28,7 +28,7 @@ $button.addEventListener("click", () => {
         $list.appendChild($li);
       }
     })
-    .catch((error) => console.log(error));
+    .catch((error) => ($list.innerHTML = `${error}`));
 });
 
 // Buscar Amigo
